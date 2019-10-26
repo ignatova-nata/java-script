@@ -11,6 +11,5 @@ console.log(x);
 var h = 1;
 var a = 2;
 var b = 3;
-s = a * b;
-//console.log(s);
+//console.log(2*(a * b + b * h + a * h));
 console.log(h > b ? "высота больше ширины" : "ширина больше высоты");
