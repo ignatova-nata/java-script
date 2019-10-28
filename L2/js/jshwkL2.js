@@ -1,5 +1,18 @@
 //Задание 1
-let a = [-1, 3, -2, 4, 9, 6];
+let arrX = [1, 3, -2, 4, 9, 6];
+//console.log(arrX);
+m = 0;
+while (arrX.length > 1) {
+	for (let i = 1; i < arrX.length; i++ ) {
+			if (arrX[0] + arrX[i] === 7 ) {
+			console.log("7 в сумме от порядковых элементов массива arrX -", m," и ",i+m);
+		}  
+	} arrX.shift();
+	//console.log(arrX);
+		m += 1;
+}
+
+/*let a = [-1, 3, -2, 4, 9, 6];
 	for (let i = 0; i < a.length; i++) {
 		if (a[0] + a[i] === 7) {
 			console.log("7 в сумме от порядковых элементов массива а - 0 и ",i);
@@ -23,6 +36,7 @@ let a = [-1, 3, -2, 4, 9, 6];
 	}
 
 let d = [-1, 3, -2, 4, 9, 6];
+
 for (let b of d) {
 	for (let i = 0; i < d.length; i++) {
 		if (b + d[i] === 7) {
@@ -30,7 +44,32 @@ for (let b of d) {
 			console.log("7 в сумме от порядковых элементов массива d -", n," и ",i);
 		} 
 	}
+
 }
+
+let arrQ = [-1, 3, -2, 4, 9, 6];
+for (let k = 0; k < arrQ.length; k++) {
+	for (let i = 1; i < arrQ.length; i++ ) {
+			if (arrQ[k] + arrQ[i] === 7 ) {
+			console.log("7 в сумме от порядковых элементов массива arrQ -", k," и ",i);
+		}  
+		
+	}
+}
+let arrX = [1, 3, -2, 4, 9, 6];
+console.log(arrX);
+let arrY = arrX.concat();
+m = 0;
+while (arrY.length > 0) {
+	for (let i = 1; i < arrX.length; i++ ) {
+			if (arrY[0] + arrX[i] === 7 ) {
+			console.log("7 в сумме от порядковых элементов массива arrX -", m," и ",i);
+		}  
+	} arrY.shift();
+	console.log(arrY);
+		m += 1;
+}*/
+		
 
 //Задание 2
 for (let i = 1; i <= 100; i++) {
