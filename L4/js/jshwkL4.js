@@ -85,3 +85,65 @@ function checkBigPalinStr(someStr) {
 let z5 = checkBigPalinStr("Иди ты, Лёша, дукуда шёл");
 console.log(z5);
 
+//Задание 6
+function getTurning(firstWord, lastWord, arr, arrTurn) {
+	//let arrTurn = [];
+	arrTurn[0] = firstWord;
+	//console.log(arrTurn.slice(-1)[0]);
+	//function getTurnFunc(arrTurn, lastWord, arr){
+	for (let i = 0; i < arr.length ; i++) {
+			 if ((((arrTurn[arrTurn.length - 1][0].localeCompare(arr[i][0]) === 0) && (arrTurn[arrTurn.length - 1][1].localeCompare(arr[i][1]) === 0) && (arrTurn[arrTurn.length - 1][2].localeCompare(arr[i][2]) !== 0)) ||
+			 ((arrTurn[arrTurn.length - 1][0].localeCompare(arr[i][0]) !== 0) && (arrTurn[arrTurn.length - 1][1].localeCompare(arr[i][1]) === 0) && (arrTurn[arrTurn.length - 1][2].localeCompare(arr[i][2]) === 0)) ||
+			 ((arrTurn[arrTurn.length - 1][0].localeCompare(arr[i][0]) === 0) && (arrTurn[arrTurn.length - 1][1].localeCompare(arr[i][1]) !== 0) && (arrTurn[arrTurn.length - 1][2].localeCompare(arr[i][2]) === 0))) 
+			 && (((lastWord[0].localeCompare(arrTurn[arrTurn.length - 1][0]) !== 0) && (lastWord[1].localeCompare(arrTurn[arrTurn.length - 1][1]) !== 0)) ||
+				((lastWord[1].localeCompare(arrTurn[arrTurn.length - 1][1]) !== 0) && (lastWord[2].localeCompare(arrTurn[arrTurn.length - 1][2]) !== 0)) ||
+				((lastWord[0].localeCompare(arrTurn[arrTurn.length - 1][0]) !== 0) &&  (lastWord[2].localeCompare(arrTurn[arrTurn.length - 1][2]) !== 0)))) {
+					arrTurn.push(arr[i]);
+					arr.splice(i,1);
+					break;
+			} 
+	}
+	(((lastWord[0].localeCompare(arrTurn[arrTurn.length - 1][0]) === 0) && (lastWord[1].localeCompare(arrTurn[arrTurn.length - 1][1]) === 0) && (lastWord[2].localeCompare(arrTurn[arrTurn.length - 1][2]) !== 0)) ||
+	((lastWord[0].localeCompare(arrTurn[arrTurn.length - 1][0]) !== 0) && (lastWord[1].localeCompare(arrTurn[arrTurn.length - 1][1]) === 0) && (lastWord[2].localeCompare(arrTurn[arrTurn.length - 1][2]) === 0)) ||
+	((lastWord[0].localeCompare(arrTurn[arrTurn.length - 1][0]) === 0) && (lastWord[1].localeCompare(arrTurn[arrTurn.length - 1][1]) !== 0) && (lastWord[2].localeCompare(arrTurn[arrTurn.length - 1][2]) === 0)))
+		?
+		arrTurn.push(lastWord) 
+		: 
+		getTurning(firstWord, lastWord, arr, arrTurn);	
+	
+	return arrTurn;
+} 
+		
+let z6 = getTurning("hit", "cog",  ["hot", "dot", "dog", "log", "lot"],[]);
+console.log(z6);
+/*function getTurning(firstWord, lastWord, arr) {
+	let arrTurn = [];
+	arrTurn[0] = firstWord;
+	let n = 0;
+		do {
+		//function getNext() {
+			for (let i = 0; i < arr.length ; i++) {
+			 if ((((arrTurn[n][0].localeCompare(arr[i][0]) === 0) && (arrTurn[n][1].localeCompare(arr[i][1]) === 0) && (arrTurn[n][2].localeCompare(arr[i][2]) !== 0)) ||
+			 ((arrTurn[n][0].localeCompare(arr[i][0]) !== 0) && (arrTurn[n][1].localeCompare(arr[i][1]) === 0) && (arrTurn[n][2].localeCompare(arr[i][2]) === 0)) ||
+			 ((arrTurn[n][0].localeCompare(arr[i][0]) === 0) && (arrTurn[n][1].localeCompare(arr[i][1]) !== 0) && (arrTurn[n][2].localeCompare(arr[i][2]) === 0))) 
+			 && (((lastWord[0].localeCompare(arrTurn[n][0]) !== 0) && (lastWord[1].localeCompare(arrTurn[n][1]) !== 0)) ||
+				((lastWord[1].localeCompare(arrTurn[n][1]) !== 0) && (lastWord[2].localeCompare(arrTurn[n][2]) !== 0)) ||
+				((lastWord[0].localeCompare(arrTurn[n][0]) !== 0) &&  (lastWord[2].localeCompare(arrTurn[n][2]) !== 0)))) {
+				n+=1;
+				arrTurn[n] = arr[i];
+				arr.splice(i,1);
+				break;
+				}
+			}
+		} while (arr.length > 2);
+		(((lastWord[0].localeCompare(arrTurn[n][0]) === 0) && (lastWord[1].localeCompare(arrTurn[n][1]) === 0) && (lastWord[2].localeCompare(arrTurn[n][2]) !== 0)) ||
+		((lastWord[0].localeCompare(arrTurn[n][0]) !== 0) && (lastWord[1].localeCompare(arrTurn[n][1]) === 0) && (lastWord[2].localeCompare(arrTurn[n][2]) === 0)) ||
+		((lastWord[0].localeCompare(arrTurn[n][0]) === 0) && (lastWord[1].localeCompare(arrTurn[n][1]) !== 0) && (lastWord[2].localeCompare(arrTurn[n][2]) === 0))) ?
+		arrTurn[n+1] = lastWord : 
+		console.log("нет");
+		//getNext();	
+	return arrTurn;
+		}
+		
+let z6 = getTurning("hit", "cog",  ["hot", "dot", "dog", "log", "lot"]);
+console.log(z6);*/
