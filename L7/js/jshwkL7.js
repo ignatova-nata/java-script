@@ -106,3 +106,20 @@ caption.innerText = "Склад";
 }
 
 generateTable(goods);
+
+
+//Задание 3 
+function removeDisabled() {
+	let form = document.forms.hwk7;
+		//console.log(form);
+	let checkBox = form.elements['check'];
+	//console.log(checkBox);
+	let inputText = document.getElementById('content');
+	//console.log(inputText);
+	if (checkBox.checked == true) {
+		//inputText.removeAttribute("disabled");
+		inputText.disabled = false;
+	} else {
+		inputText.disabled = true;
+		}
+}
