@@ -154,7 +154,7 @@ function getPrizeN(someNumber) {
 	 pr3 =  Math.floor(Math.random(1, someNumber*someNumber) * (someNumber*someNumber - 1)) + 1;} 
 	while (pr1===pr2 || pr2===pr3 || pr1===pr3);
 		
-	console.log(pr1, pr2, pr3);
+	//console.log(pr1, pr2, pr3);
  	div1.addEventListener("click", showPresent);
 		function showPresent(event) {
 		let clickElem = event.target;
@@ -175,4 +175,60 @@ function getPrizeN(someNumber) {
 		 
  } 
  
- getPrizeN(3) ;
+ getPrizeN(2) ;
+  
+ //Задание 4
+//i	
+let fieldsets = document.getElementsByTagName("fieldset");
+//console.log(fieldsets);
+let lpInput = fieldsets[1].getElementsByTagName("input");
+//console.log(lpInput[0]);
+//console.log(lpInput[1]);
+lpInput[0].addEventListener("focus", focusOnElem);
+lpInput[1].addEventListener("focus", focusOnElem);
+function focusOnElem() {
+	this.nextElementSibling.classList.add("error");
+}
+//ii
+lpInput[0].addEventListener("blur", focusOutElem1);
+function focusOutElem1() {
+  	if (this.value.length < 11 && this.value.length > 3 ){
+			this.nextElementSibling.classList.remove("error");
+			this.nextElementSibling.classList.add("success");
+	    }
+}
+lpInput[1].addEventListener("blur", focusOutElem2);
+function focusOutElem2() {
+	if (this.value.length > 5 ){
+			this.nextElementSibling.classList.remove("error");
+			this.nextElementSibling.classList.add("success");
+		}
+}
+	
+//iii
+
+let form = document.forms.hwk7;
+form.addEventListener("submit", takeForm);
+function takeForm(event) {
+    event.preventDefault();
+	let arr_value = [this.elements.login.value, this.elements.pwd.value, this.elements.text.value];
+    console.log(arr_value);
+}
+
+//iiii
+form.addEventListener("reset", outForm);
+function outForm(event) {
+	this.elements.login.value = null;
+	this.elements.login.nextElementSibling.classList.add("error");
+	this.elements.login.nextElementSibling.classList.remove("success");
+	
+	this.elements.pwd.value = null;
+	this.elements.pwd.nextElementSibling.classList.add("error");
+	this.elements.pwd.nextElementSibling.classList.remove("success");
+	
+	this.elements.text.value = null;
+	this.elements.text.disabled = true;
+	
+}
+
+
