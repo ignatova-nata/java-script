@@ -123,3 +123,56 @@ function removeDisabled() {
 		inputText.disabled = true;
 		}
 }
+
+
+//Задание2
+function getPrizeN(someNumber) {
+	
+	let section = document.createElement("section");
+	section.classList.add("section");
+	let div1 = document.createElement("div");
+	div1.classList.add("div1");
+	let div2 = document.createElement("div");
+	div2.classList.add("div2");
+	section.append(div1, div2);
+	let pDiv2 = document.createElement("p");
+	let n = 3;
+	pDiv2.innerText = `количество попыток - ${n}`;
+	div2.append(pDiv2);
+	for (let i = 1; i <= someNumber * someNumber; i++) {
+		let p = document.createElement("p");
+		p.setAttribute("data-pr",i);
+		//console.log(p);
+		div1.append(p);
+		p.innerText = "Подарок?";
+	}document.body.appendChild(section);
+	
+	let pr1 = pr2 = pr3 = 0;
+	do{
+	 pr1 = Math.floor(Math.random(1, someNumber*someNumber) * (someNumber*someNumber - 1)) + 1;
+	 pr2 =  Math.floor(Math.random(1, someNumber*someNumber) * (someNumber*someNumber - 1)) + 1;
+	 pr3 =  Math.floor(Math.random(1, someNumber*someNumber) * (someNumber*someNumber - 1)) + 1;} 
+	while (pr1===pr2 || pr2===pr3 || pr1===pr3);
+		
+	console.log(pr1, pr2, pr3);
+ 	div1.addEventListener("click", showPresent);
+		function showPresent(event) {
+		let clickElem = event.target;
+		let present = clickElem.dataset.pr;
+			if (present == pr1 || present == pr2 || present == pr3) {
+			clickElem.innerText = "Подарок!";
+			clickElem.classList.add("present");
+			this.removeEventListener("click",showPresent);
+			} else { n-=1; 
+					pDiv2.innerText = `количество попыток - ${n}`;
+					clickElem.innerText = "Нет подарка";
+					clickElem.classList.add("error");
+					if (n==0) {
+						this.removeEventListener("click",showPresent);
+					}
+			}
+		}
+		 
+ } 
+ 
+ getPrizeN(3) ;
