@@ -19,13 +19,13 @@ class Player {
     constructor(name){
         this._name = name;
        // this._img = null;
-		this._x = 125;
-		this._y = 125;
+		this._x = null;//чтобы задать через RandomX
+		this._y = null;// чтобы задать через RandomY
 		this._width = 128;
 		this._height = 128;
-		this.randomX();
-		this.randomY();
-		this.drawImg();
+		randomX();//ВОПРОС: как задать рандомные координаты, если выводится в консоли hwk8-oop.js:26 Uncaught ReferenceError: randomX is not defined
+		randomY();//ВОПРОС: как задать рандомные координаты
+		drawImg();
         }
     get name() {
         return this._name;
@@ -61,21 +61,22 @@ class Player {
 		let img = new Image();
 		img.src = 'img/' + this._name +'.png';
 		img.onload = () => {
-			ctx.drawImage(
+			 ctx.drawImage(
 				img,
 				this._x, this._y,
 				this._width, this._height
 			);
 		}
 	}
-	
 }
 
 class Tiger extends Player{
     constructor(name){
         super(name);
 		this._clk = 0;
-		this.move();
+		move();
+		// move.bind как правильно задавать
+		//document.addEventListener("keydown", move.bind(document, tiger));
 	}
 	get clk() {
         return this._clk;
@@ -83,9 +84,9 @@ class Tiger extends Player{
     set clk(value) {
         this._name = clk;
     }
-		move(event) {
-			if (event.code === "KeyD") {
-				ctx.fillRect(this._x, this._y, this._width, this._height);
+	move(event) {
+		if (event.code === "KeyD") {
+			ctx.fillRect(this._x, this._y, this._width, this._height);
 				this._x += 4;
 					if (this._x > 773) {
 						this._x -= 4;
@@ -129,7 +130,7 @@ class Tiger extends Player{
 
 }
 
-class Rabbits {
+class Rabbits {//массив из кроликов
     constructor(){
 		this._rabbitsNumber = [];
 		this._rabbitCount = Math.floor(Math.random() * (5 - 2)) + 2;
@@ -149,170 +150,40 @@ class Rabbits {
 	get rabbitsNumber() {
 		return this._rabbitsNumber;
 	}
+	set rabbitNumber(value) {
+        this._rabbitNumber = value;
+    }
 	
 }
 
 class Hunting {
 	constructor() {
 	this.rabbitHunt();
-	this.hunterRabbit();
 	}
 	rabbitHunt() {
-		ctx.fillStyle = "green";
-		for (let i = 1; i < tiger.clk; i++){
-			for (let j = 0; j < rabbits.rabbitsNumber.length; j++) {
-				if ((Math.abs(tiger.x - rabbits[i].x)) < 110 && (Math.abs(tiger.y - rabbits[i].y)) < 110) {
+		//ctx.fillStyle = "green";
+		for (let i = 1; i < tiger.clk; i++){// проверка после каждого хода
+			for (let j = 0; j < rabbits.rabbitsNumber.length; j++) {//пока есть кролики
+				if ((Math.abs(tiger.x - rabbits.rabbitsNumber[j].x)) < 120 && (Math.abs(tiger.y - rabbits.rabbitsNumber[j].y)) < 120) {
 					let img = document.getElementsByTagName("img")[0];
 					img.src = 'img/rabbit.png';
 					img.style.width = 'auto'
 					img.style.height = '50%'
 					let p = document.getElementsByTagName("p")[0];
 					p.innerText = `Осталось ${--rabbits.rabbitCount} кролика`;
-					ctx.fillRect(rabbits[i].x, rabbits[i].y, rabbits[i].width, rabbits[i].height);
-					rabbits.splise(i,1);
+					ctx.fillRect(rabbits.rabbitsNumber[j].x, rabbits.rabbitsNumber[j].y, rabbits.rabbitsNumber[j].width, rabbits.rabbitsNumber[j].height);
+					rabbits.rabbitsNumber.splise(j,1);
 				} 
 			}
 		}
 	}
 	
-	hunterRabbit() {
-		if ((!(tiger.x%30)) || (!(tiger.y%25))) { 
-			rabbitHunt();	
-		}else{
-			ctx.fillStyle = "midnightblue";
-			for (let j = 0; j < rabbits.rabbitsNumber.length; j++) {
-				img.src = 'img/rabbitHunter.png';
-			} rabbits.rabbitsNumber.push(new Player(rabbit));
-		}
-	}
-		
-		
+			
 }
 
 let tiger = new Tiger();
 let rabbits = new Rabbits();
 let play = new Hunting();
-play.hunterRabbit();
-
-//document.addEventListener("keydown", move.bind(document, tiger))
-/*let div = document.getElementsByTagName("div")[0];
-console.log(div);
-
-div.style.cssText = `
-width: 900px;
-background: green;
-height: 100px;
-`;
-let canvas = document.getElementsByTagName("canvas")[0];
-
-canvas.width = 900;
-canvas.height = 600;
-
-let ctx = canvas.getContext("2d");
-ctx.fillStyle = "green";
-ctx.fillRect(0,0,900, 600);
 
 
-let tiger = {
-    img: 'tiger.png',
-    x: 72,
-    y: 15,
-    width: 128,
-    height: 128
-};
-let rabbit1 = {
-    img: 'rabbit.png',
-    x: 228,
-    y: 115,
-    width: 128,
-    height: 128
-};
-
-let rabbit2 = {
-    img: 'rabbit.png',
-    x: 128,
-    y: 434,
-    width: 128,
-    height: 128
-};
-function drawImg(obj) {
-    let img = new Image();
-    img.src = 'img/' + obj.img;
-    img.onload = () => {
-        ctx.drawImage(
-            img,
-            obj.x, obj.y,
-            obj.width, obj.height
-        );
-    }
-}
-drawImg(rabbit1);
-drawImg(rabbit2);
-drawImg(tiger);
-
-function move(obj, event) {
-     if (event.code === "KeyD") {
-        //console.log("перемещение вправо");
-        clearImg(obj);
-        obj.x += 4;
-        drawImg(obj);
-		//console.log(Math.abs(obj.x - obj1.x));// не видит переменные
-	} else if (event.code === "KeyA") {
-       // console.log("перемещение влево");
-        clearImg(obj);
-        obj.x -= 4;
-        drawImg(obj);
-    } else if (event.code === "KeyW") {
-      //  console.log("перемещение вверх");
-        clearImg(obj);
-        obj.y -= 4;
-        drawImg(obj);
-    } else if (event.code === "KeyS") {
-       // console.log("перемещение вниз");
-        clearImg(obj);
-        obj.y += 4;
-		drawImg(obj);
-    } else if ((Math.abs(obj.x - rabbit.x)) < 78 
-			|| (Math.abs(obj.y - rabbit.y)) < 78) {
-		chase(obj, obj1, obj2);
-	}
-}
-
-function clearImg(obj) {
-    ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
-}
-
-		
-function chase(obj, obj1, obj2) {
-	let n = 0;
-
-	//console.log(Math.abs(obj.x - obj1.x));
-	//console.log(Math.abs(obj.x - obj2.x));
-	//console.log(Math.abs(obj.y - obj1.y));
-	//console.log(Math.abs(obj.y - obj2.y));
-    if ((Math.abs(obj.x - obj1.x)) < 78 && (Math.abs(obj.y - obj1.y)) < 78) {
-		let img = document.getElementsByTagName("img")[0];
-		img.src = 'img/rabbit.png';
-		img.style.width = 'auto'
-		img.style.height = '50%'
-		//console.log(img);
-		let p = document.getElementsByTagName("p")[0];
-		n+=1;
-		p.innerText = ` + ${n}`;
-		ctx.fillRect(obj1.x, obj1.y, obj1.width, obj1.height);
-	} else if ((Math.abs(obj.x - obj2.x)) < 78 && (Math.abs(obj.y - obj2.y)) < 78) {
-		let img = document.getElementsByTagName("img")[0];
-		img.src = 'img/rabbit.png';
-		img.style.width = 'auto'
-		img.style.height = '50%'
-		//console.log(img);
-		let p = document.getElementsByTagName("p")[0];
-		n+=1;
-		p.innerText = ` + ${n}`;
-		ctx.fillRect(obj2.x, obj2.y, obj2.width, obj2.height);
-	}
-}
-document.addEventListener("keydown",
-    move.bind(document, tiger, rabbit1, rabbit2));// ??*/
-
-
+document.addEventListener("keydown", move.bind(document, tiger))
